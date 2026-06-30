@@ -119,6 +119,8 @@ for feature, imp in zip(features, importances):
         'weather_condition_Chuva': 'Condição climática ser Chuva'
     }[feature]
     print(f"-> Impacto do fator '{nome_pt}' no atraso do pedido: {imp*100:.2f}%")
+'''
+</details>
 
 ---
 
