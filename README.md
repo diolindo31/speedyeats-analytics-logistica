@@ -118,5 +118,24 @@ for feature, imp in zip(features, importances):
         'restaurant_category_Burgers': 'Categoria ser Hamburgueria (Burgers)',
         'weather_condition_Chuva': 'Condição climática ser Chuva'
     }[feature]
-'''python
     print(f"-> Impacto do fator '{nome_pt}' no atraso do pedido: {imp*100:.2f}%")
+
+---
+🔍 2. Consultas de Negócio (SQL - Google BigQuery)
+Os dados simulados foram estruturados e carregados no Google BigQuery para a extração de indicadores operacionais e financeiros estratégicos.
+
+Query 1: Impacto Financeiro dos Cancelamentos por Clima
+
+SELECT 
+    weather_condition AS clima,
+    cancellation_reason AS motivo_cancelamento,
+    COUNT(order_id) AS total_pedidos_cancelados,
+    ROUND(SUM(order_amount_brl), 2) AS faturamento_perdido_reais
+FROM 
+    `portfolio-bi-500921.speedyeats_operacoes.pedidos`
+WHERE 
+    order_status = 'Cancelado'
+GROUP BY 
+    clima, motivo_cancelamento
+ORDER BY 
+    faturamento_perdido_reais DESC;
