@@ -119,7 +119,7 @@ for feature, imp in zip(features, importances):
         'weather_condition_Chuva': 'Condição climática ser Chuva'
     }[feature]
     print(f"-> Impacto do fator '{nome_pt}' no atraso do pedido: {imp*100:.2f}%")
-'''
+```
 </details>
 
 ---
@@ -146,4 +146,39 @@ GROUP BY
     clima, motivo_cancelamento
 ORDER BY 
     faturamento_perdido_reais DESC;
-"""
+```
+---
+
+Query 2: Identificação de Gargalos de Production nos Finais de Semana
+
+```sql
+SELECT 
+    restaurant_category AS categoria,
+    EXTRACT(HOUR FROM order_timestamp) AS hora_do_dia,
+    ROUND(AVG(prep_time_min), 1) AS tempo_medio_preparo_cozinha,
+    ROUND(AVG(driver_wait_time_min), 1) AS tempo_espera_pelo_motoboy,
+    ROUND(AVG(travel_time_min), 1) AS tempo_de_transito_rua,
+    ROUND(AVG(total_time_min), 1) AS tempo_total_entrega,
+    COUNT(order_id) AS volume_pedidos
+FROM 
+    `portfolio-bi-500921.speedyeats_operacoes.pedidos`
+WHERE 
+    order_status = 'Entregue'
+    AND EXTRACT(DAYOFWEEK FROM order_timestamp) IN (1, 7)
+GROUP BY 
+    categoria, hora_do_dia
+ORDER BY 
+    tempo_total_entrega DESC
+LIMIT 10;
+```
+---
+</details>
+
+---
+
+## 🛠️ 3. Tecnologias Utilizadas
+* Python (Pandas, Numpy, Scikit-Learn) - Engenharia de dados e Modelagem Preditiva com IA.
+
+* SQL (Google BigQuery) - Manipulação de dados estruturados e queries analíticas de performance.
+
+* Google Looker Studio - Construção de dashboards corporativos e visualização interativa de dados.
