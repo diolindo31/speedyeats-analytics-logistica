@@ -121,11 +121,16 @@ for feature, imp in zip(features, importances):
     print(f"-> Impacto do fator '{nome_pt}' no atraso do pedido: {imp*100:.2f}%")
 
 ---
-🔍 2. Consultas de Negócio (SQL - Google BigQuery)
+
+## 🔍 2. Consultas de Negócio (SQL - Google BigQuery)
 Os dados simulados foram estruturados e carregados no Google BigQuery para a extração de indicadores operacionais e financeiros estratégicos.
+
+<details>
+<summary><b>📂 Clique aqui para visualizar o Código SQL (Google BigQuery)</b></summary>
 
 Query 1: Impacto Financeiro dos Cancelamentos por Clima
 
+```sql
 SELECT 
     weather_condition AS clima,
     cancellation_reason AS motivo_cancelamento,
@@ -139,3 +144,4 @@ GROUP BY
     clima, motivo_cancelamento
 ORDER BY 
     faturamento_perdido_reais DESC;
+"""
